@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.String">
+    <highscore>
+      <name>Master</name>
+      <score>9001</score>
+    </highscore>
+
+    <highscore>
+      <name>Expert</name>
+      <score>7500</score>
+    </highscore>
+
+    <highscore>
+      <name>Adept</name>
+      <score>3000</score>
+    </highscore>
+
+    <highscore>
+      <name>Novice</name>
+      <score>1000</score>
+    </highscore>
+
+    <highscore>
+      <name>Leeroy</name>
+      <score>-42</score>
+    </highscore>
+  </Asset>
+</XnaContent>

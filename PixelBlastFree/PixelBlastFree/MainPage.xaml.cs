@@ -15,6 +15,9 @@ namespace PixelBlastFree
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        string difficulty = "Medium";
+        string playerName = "Player";
+
         // Constructor
         public MainPage()
         {
@@ -24,7 +27,7 @@ namespace PixelBlastFree
         // Simple button Click event handler to take us to the second page
         private void start_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/GamePage.xaml?difficulty="+difficulty+"&playerName="+playerName, UriKind.Relative));
         }
 
         private void report_Click(object sender, RoutedEventArgs e)
@@ -34,7 +37,33 @@ namespace PixelBlastFree
 
         private void difficulty_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            switch (difficulty)
+            {
+                case "Easy":
+                    difficulty = "Medium";
+                    break;
+                case "Medium":
+                    difficulty = "Hard";
+                    break;
+                case "Hard":
+                    difficulty = "Extreme";
+                    break;
+                default:
+                    difficulty = "Easy";
+                    break;
+            }
+
+            UpdateDifficultyButton();
+        }
+
+        private void UpdateDifficultyButton()
+        {
+            difficultyButton.Content = "Difficulty: " + difficulty;
+        }
+
+        private void name_change(object sender, TextChangedEventArgs e)
+        {
+            playerName = name_box.Text;
         }
     }
 }

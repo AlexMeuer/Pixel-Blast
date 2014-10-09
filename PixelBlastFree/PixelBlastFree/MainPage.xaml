@@ -10,7 +10,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Landscape" Orientation="Landscape"
+    SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -32,8 +32,11 @@
             <!--Create a single button to navigate to the second page which is rendered with the XNA Framework-->
             <Button Height="100" Content="Start" Click="start_Click" Margin="0,10,0,209" />
             
-            <Button Height="100" Content="Report a bug" Click="report_Click" Margin="0,209,0,10" />
-            <Button Height="100" Content="Difficulty" Click="difficulty_Click"/>
+            <Button Content="Report a bug" Click="report_Click" Margin="10,538,217,10" />
+            <Button x:Name="difficultyButton" Height="100" Content="Difficulty: Medium" Click="difficulty_Click"/>
+            <Image HorizontalAlignment="Left" Height="100" Margin="341,-126,0,0" VerticalAlignment="Top" Width="100" Source="/62x62.png"/>
+            <TextBox x:Name="name_box" HorizontalAlignment="Left" Height="72" Margin="113,98,0,0" TextWrapping="Wrap" Text="Player" VerticalAlignment="Top" Width="229" InputScope="Text" TextChanged="name_change" TextAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Left" Margin="113,76,0,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top" RenderTransformOrigin="-0.562,0.589"/>
         </Grid>
     </Grid>
  
