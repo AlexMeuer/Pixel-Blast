@@ -12,9 +12,9 @@ namespace PixelBlastFree
     public abstract class Collision
     {
         /// <summary>
-        /// Checks if two rectangles or bounds are intersecting.
-        /// Quicker than PerPixel but not as accurate.
+        /// Checks if two rectangles are intersecting.
         /// </summary>
+        /// <returns>True if the rectangles intersect</returns>
         public static bool BoundingBox(Rectangle recOne, Rectangle recTwo)
         {
             bool collision = false;

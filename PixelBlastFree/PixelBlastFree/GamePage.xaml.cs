@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using Microsoft.Devices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -29,6 +30,8 @@ namespace PixelBlastFree
         SpriteFont mainFont;//, errorFont, largerFont;
 
         Vector2 screen; //dimensions
+
+        VibrateController vibrate;
 
         //resolution independence
         //Vector2 virtualScreen = new Vector2(800, 480);
@@ -79,7 +82,9 @@ namespace PixelBlastFree
             //currentGameState = GameState.MainMenu;
             selectedDifficulty = Difficulty.Medium;
 
-            playerOne = new Player((float)selectedDifficulty);
+            vibrate = VibrateController.Default;
+
+            playerOne = new Player((float)selectedDifficulty, new Vector2(0));
 
         }
 
@@ -137,6 +142,8 @@ namespace PixelBlastFree
                         break;
                 }
 
+            playerOne.Location = new Vector2((screen.X / 2) - 60, screen.Y - 60);
+
             // Start the timer
             timer.Start();
 
@@ -166,17 +173,17 @@ namespace PixelBlastFree
             // TODO: Add your update logic here
 
             TouchCollection touches = TouchPanel.GetState();
-            float totalX = 0;//, totalY = 0;
+            float totalX = 0, totalY = 0;
             int i;
             for (i = 0; i < touches.Count; i++)
             {
                 totalX += touches[i].Position.X;    //get the total x and y position of all touches
-                //totalY += touches[i].Position.Y;  Y is not needed as we only want to move player left or right
+                totalY += touches[i].Position.Y;
             }
 
             //get the average of our touch locations and scale them so they work like they should
             //Vector2 averageTouchLocation = new Vector2((totalX / i) / scalingFactor.X, (totalY / i) / scalingFactor.Y);
-            Vector2 averageTouchLocation = new Vector2((totalX / i), 0);
+            Vector2 averageTouchLocation = new Vector2(totalX / i, totalY / i);
 
             
 
@@ -195,7 +202,7 @@ namespace PixelBlastFree
 
                 if (Explosion.CheckAllParticlesTransparent(particleEffectsList[j]))
                 {   //if all particles are transparent then we can remove the effect
-                    particleEffectsList.RemoveAt(i);
+                    particleEffectsList.RemoveAt(j);
                     j--; //dont want to skip anything in the list!
                 }
             }
@@ -429,6 +436,7 @@ namespace PixelBlastFree
                             }
                             //hurt enemy
                             enemies[enemyIndex].Health -= 10;
+                            vibrate.Start(TimeSpan.FromMilliseconds(100));
                         }
                     }//end enemy-player collision check
                 }
@@ -451,6 +459,7 @@ namespace PixelBlastFree
                             }
                             //hurt enemy
                             enemies[enemyIndex].Health -= 10;
+                            vibrate.Start(TimeSpan.FromMilliseconds(100));
                         }
                     }
                 }

@@ -37,7 +37,7 @@ namespace PixelBlastFree
         #endregion
 
         #region CONSTRUCTOR(S)
-        public Player(float difficultyFactor)
+        public Player(float difficultyFactor, Vector2 startingPosition)
         {
             //name = playerName;
             //viewport = graphics.GraphicsDevice.Viewport;
@@ -58,9 +58,8 @@ namespace PixelBlastFree
             shieldRec = new Rectangle(20, (int)viewport.Y - 50, 10, shield /5);
             shieldRec.Y -= (shield / 2) + 20;
 
-            //start the player at the bottom of the screen and in the middle
-            location.X = (viewport.X / 2) - 10;  //cant use (texture.width/2) bcoz texture isnt loaded
-            location.Y = viewport.Y - 50;
+            location = startingPosition;
+            newLocation = location;
 
             gunCooldown = 0;
             timeSinceLastFrameChange = TimeSpan.Zero;
@@ -210,7 +209,8 @@ namespace PixelBlastFree
             else
             {
                 shieldActive = false;
-                newLocation = touchLocation;
+                //newLocation = touchLocation;
+                newLocation = Vector2.Clamp(touchLocation, new Vector2(0, 500), new Vector2(500, 800));
             }
 
             location = Vector2.SmoothStep(location, newLocation, 0.2f);
@@ -329,11 +329,9 @@ namespace PixelBlastFree
             get { return name; }
             set { name = value; }
         }*/
-        /// <returns>returns the absolute location of player's centre(not relative to player location)</returns>
         public Vector2 Centre
         {
             get { return new Vector2(BoundingBox.Center.X, BoundingBox.Center.Y); }
-            //no set
         }
         public int EnemiesKilled
         {
@@ -406,7 +404,7 @@ namespace PixelBlastFree
         public Vector2 Location
         {
             get { return location; }
-            //no set
+            set { location = value; }
         }
         public int Score
         {
