@@ -42,17 +42,21 @@ namespace PixelBlastFree
         //public enum GameState { MainMenu, Playing, GameOver }
         //static GameState currentGameState;
 
-        //using an enum for game difficulty. numbers associated with each entry is what is used to calculate and scale things
-        public enum Difficulty { Easy = 3, Medium = 4, Hard = 5, Extreme = 7 };
+        /// <summary>
+        /// enum for game difficulty. The numbers associated with each entry are what is used to calculate and scale things
+        /// </summary>
+        public enum Difficulty {Easy = 3, Medium = 4, Hard = 5, Extreme = 7 };
         static Difficulty selectedDifficulty;
 
         //we cannot call exit from a screen so the screen sets a bool and the Game1 update method picks it up
         //static bool toExit = false;
 
+        /// <summary>
+        /// Whether we should play music or not. If the user is playing their own music, we will not intrude.
+        /// </summary>
         public static bool useGameMusic;
-        public static bool isPaused;
+        //public static bool isPaused;
 
-        #region Class Variables
         Player playerOne;
         //SoundEffectInstance backgroundMusic;
         SoundEffect laserFire;
@@ -80,7 +84,7 @@ namespace PixelBlastFree
             timer.Draw += OnDraw;            
 
             //currentGameState = GameState.MainMenu;
-            selectedDifficulty = Difficulty.Medium;
+            //selectedDifficulty = Difficulty.Medium;
 
             vibrate = VibrateController.Default;
 
@@ -531,7 +535,6 @@ namespace PixelBlastFree
             get { return playerOne.Name; }
             set { playerOne.Name = value; }
         } */
-        #endregion
         #endregion
     }
 }
