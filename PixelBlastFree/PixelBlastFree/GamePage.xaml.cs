@@ -241,7 +241,7 @@ namespace PixelBlastFree
 
             if (playerOne.Lives == 0)
             {   //if the player has run out of lives then it's game over!
-                NavigationService.Navigate(new Uri("/ScorePage.xaml?score="+playerOne.Score+"?name="+playerOne.Name, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/ScorePage.xaml?score="+playerOne.Score+"&name="+playerOne.Name, UriKind.Relative));
             }
         }
 

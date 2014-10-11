@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<XnaContent>
-  <Asset Type="System.String">
+<scores>
     <highscore>
       <name>Master</name>
       <score>9001</score>
@@ -25,5 +24,4 @@
       <name>Leeroy</name>
       <score>-42</score>
     </highscore>
-  </Asset>
-</XnaContent>
+  </scores>

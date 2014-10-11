@@ -24,12 +24,19 @@ namespace PixelBlastFree
             name = _name;
             score = _score;
         }
+
+        public override string ToString()
+        {
+            //return base.ToString();
+            return String.Format("{0}:\t{1}", name, score);
+        }
     }
 
     public partial class ScorePage : PhoneApplicationPage
     {
         const int maxNumScores = 10;
         List<highScore> scoreList;
+        bool scoresLoaded = false;
 
         public ScorePage()
         {
@@ -38,16 +45,33 @@ namespace PixelBlastFree
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            LoadScoresFromXML("scores.xml");    //do this before querying the current player's name and score (this method overwrites scoreList)
+            if (!scoresLoaded)  //without this, player's score adds itself every time we get here
+            {
+                LoadScoresFromXML("scores.xml");    //do this before querying the current player's name and score (this method overwrites scoreList)
 
-            string name, score;
+                string name, score;
 
-            //query player's name and score
-            NavigationContext.QueryString.TryGetValue("name", out name);
-            NavigationContext.QueryString.TryGetValue("score", out score);
+                //query player's name and score
+                NavigationContext.QueryString.TryGetValue("name", out name);
+                NavigationContext.QueryString.TryGetValue("score", out score);
 
-            scoreList.Add(new highScore(name, Convert.ToInt32(score)));
+                scoreList.Add(new highScore(name, Convert.ToInt32(score)));
 
+                if (scoreList.Count > maxNumScores)
+                {
+                    scoreList.RemoveRange(maxNumScores, scoreList.Count - maxNumScores);    //needs testing
+                }
+
+                scoresLoaded = true;
+            }
+
+            scoreBox.ItemsSource = scoreList;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            SaveScoresToXML("scores.xml");
+            base.OnNavigatedFrom(e);
         }
 
         private void LoadScoresFromXML(string name)
@@ -70,6 +94,18 @@ namespace PixelBlastFree
             scoreList = data.ToList<highScore>();
         }
 
+        private void SaveScoresToXML(string name)
+        {
+            var ele = new XElement("scores",
+                    from highscore in scoreList
+                    select new XElement("highscore",
+                            new XElement("name", highscore.name),
+                            new XElement("score", highscore.score)
+                            ));
+
+            SaveToIsolatedStorage(ele, name);
+        }
+
         public static XDocument LoadFromIsolatedStorage(string name)
         {
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
@@ -84,7 +120,7 @@ namespace PixelBlastFree
             }
         }
 
-        public static void SaveToIsolatedStorage(XDocument doc, string name)
+        public static void SaveToIsolatedStorage(XElement doc, string name)
         {
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {

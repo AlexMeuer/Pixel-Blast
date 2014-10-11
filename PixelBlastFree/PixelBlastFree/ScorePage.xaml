@@ -28,7 +28,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox x:Name="scoreBox" HorizontalAlignment="Left" Height="587" Margin="10,10,0,0" VerticalAlignment="Top" Width="436" />
+            <ListBox x:Name="scoreBox" HorizontalAlignment="Left" Height="587" Margin="10,10,0,0" VerticalAlignment="Top" Width="436" FontSize="36" FontWeight="Bold" />
         </Grid>
     </Grid>
 

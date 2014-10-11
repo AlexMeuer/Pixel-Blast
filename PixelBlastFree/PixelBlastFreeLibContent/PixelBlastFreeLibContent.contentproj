@@ -148,13 +148,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scores.xml">
-      <Name>Scores</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="defaultParticle.png">
       <Name>defaultParticle</Name>
       <Importer>TextureImporter</Importer>
