@@ -19,7 +19,7 @@ namespace PixelBlastFree
 
         int enemiesKilled;
         int score, health, shield, MaxHealth, MaxShield;  //player stats
-        //string name;    //player's name
+        string name;    //player's name
 
         const byte MaxSpeed = 10;
         byte lives, gunCooldown;
@@ -324,11 +324,11 @@ namespace PixelBlastFree
         }
         #endregion
         #region PROPERTIES
-        /*public string Name
+        public string Name
         {
             get { return name; }
             set { name = value; }
-        }*/
+        }
         public Vector2 Centre
         {
             get { return new Vector2(BoundingBox.Center.X, BoundingBox.Center.Y); }

@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
 using Microsoft.Devices;
+using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -88,12 +82,37 @@ namespace PixelBlastFree
 
             vibrate = VibrateController.Default;
 
-            playerOne = new Player((float)selectedDifficulty, new Vector2(0));
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            string diffString;
+            NavigationContext.QueryString.TryGetValue("difficulty", out diffString);
+            
+            switch (diffString)
+            {
+                case "Easy":
+                    selectedDifficulty = Difficulty.Easy;
+                    break;
+                case "Extreme":
+                    selectedDifficulty = Difficulty.Extreme;
+                    break;
+                case "Hard":
+                    selectedDifficulty = Difficulty.Hard;
+                    break;
+                default:
+                    selectedDifficulty = Difficulty.Medium;
+                    break;
+            }
+
+            //create the player object
+            playerOne = new Player((float)selectedDifficulty, new Vector2(0));
+
+            //set the player's name
+            string playerName;
+            NavigationContext.QueryString.TryGetValue("playerName", out playerName);
+            playerOne.Name = playerName;
+
             // Set the sharing mode of the graphics device to turn on XNA rendering
             SharedGraphicsDeviceManager.Current.GraphicsDevice.SetSharingMode(true);
 
@@ -226,7 +245,7 @@ namespace PixelBlastFree
 
             if (playerOne.Lives == 0)
             {   //if the player has run out of lives then it's game over!
-                throw new NotImplementedException();
+                NavigationService.Navigate(new Uri("/ScorePage.xaml?score="+playerOne.Score+"&name="+playerOne.Name, UriKind.Relative));
             }
         }
 
