@@ -14,6 +14,9 @@ using Microsoft.Phone.Shell;
 
 namespace PixelBlastFree
 {
+    /// <summary>
+    /// Stores a name and a score.
+    /// </summary>
     struct highScore
     {
         public string name;
@@ -32,6 +35,9 @@ namespace PixelBlastFree
         }
     }
 
+    /// <summary>
+    /// Displays the game's highscores & saves/loads them to/from XML.
+    /// </summary>
     public partial class ScorePage : PhoneApplicationPage
     {
         const int maxNumScores = 10;
@@ -43,6 +49,10 @@ namespace PixelBlastFree
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Loads the highscores from XML (if it hasn't done so already) and adds the player's score.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!scoresLoaded)  //without this, player's score adds itself every time we get here
@@ -68,12 +78,27 @@ namespace PixelBlastFree
             scoreBox.ItemsSource = scoreList;
         }
 
+        /// <summary>
+        /// Saves the highscores to XML.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             SaveScoresToXML("scores.xml");
             base.OnNavigatedFrom(e);
         }
 
+        /// <summary>
+        /// Navigates back to main menu instead of back to game page
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            base.OnBackKeyPress(e);
+        }
+
+        #region Saving & Loading
         private void LoadScoresFromXML(string name)
         {
             //try loading from storage...
@@ -132,6 +157,7 @@ namespace PixelBlastFree
                 using (var file = store.OpenFile(name, FileMode.OpenOrCreate))
                     doc.Save(file);
             }
-        }
+        } 
+        #endregion
     }
 }
