@@ -279,16 +279,23 @@ namespace PixelBlastFree
                 timeSinceLastFrameChange = TimeSpan.Zero;   //reset the frame timing
             }
 
-            if (shieldActive)
-            {   //if player has shield activated, set the texture we want to draw to be the shield texture(else is would be the default texture, see above)
-                textureToDraw = shieldTex;
-            }
+            //destination and source rectangles for drawing the player
+            Rectangle destRec, sourceRec;
+            
+            //draw the player
+            destRec = new Rectangle((int)location.X, (int)location.Y, frameWidth, spriteSheet.Height);
+            
+            sourceRec = new Rectangle(frameWidth * currentFrame, 0, frameWidth, spriteSheet.Height);
+            spriteBatch.Draw(spriteSheet, destRec, sourceRec, Color.White);
 
-            //destRec is where we want to draw the player texture
-            Rectangle destRec = new Rectangle((int)location.X, (int)location.Y, frameWidth, spriteSheet.Height);
-            //source rec is what part of the texture we want to draw. "(CurrentFrame - 1)" makes sure the correct position for each frame is chosen. This can now be used for any texture, any amount of frames, etc...
-            Rectangle sourceRec = new Rectangle(frameWidth * currentFrame, 0, frameWidth, spriteSheet.Height);
-            spriteBatch.Draw(textureToDraw, destRec, sourceRec, Color.White);
+            //draw the shield if it's active
+            if (shieldActive)
+            {
+                destRec = new Rectangle((int)location.X, (int)location.Y, frameWidth, spriteSheet.Height);
+                
+                sourceRec = new Rectangle(frameWidth * currentFrame, 0, frameWidth, spriteSheet.Height);
+                spriteBatch.Draw(shieldTex, destRec, sourceRec, Color.White);
+            }
 
         }//end Animate()
         #endregion
