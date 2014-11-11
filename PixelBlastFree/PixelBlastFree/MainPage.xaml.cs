@@ -65,5 +65,23 @@ namespace PixelBlastFree
         {
             playerName = name_box.Text;
         }
+
+        /// <summary>
+        /// Closes the application instead of returning to highscore page
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            //remove the ability to go back so that app simply closes
+            if (NavigationService.CanGoBack)
+            {
+                while (NavigationService.RemoveBackEntry() != null)
+                {
+                    NavigationService.RemoveBackEntry();
+                }
+            }
+
+            base.OnBackKeyPress(e);
+        }
     }
 }
