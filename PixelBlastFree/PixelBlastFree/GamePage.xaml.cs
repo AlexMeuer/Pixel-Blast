@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace PixelBlastFree
 {
+
     public partial class GamePage : PhoneApplicationPage
     {
         ContentManager contentManager;
@@ -23,7 +24,7 @@ namespace PixelBlastFree
         SpriteBatch spriteBatch;
         SpriteFont mainFont;//, errorFont, largerFont;
 
-        Vector2 screen; //dimensions
+        public static Vector2 screen; //dimensions
 
         VibrateController vibrate;
 
